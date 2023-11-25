@@ -122,7 +122,7 @@ export const Stats = ({ contactName, attemps, percentage, grade, credits }) => {
                   : contactName}
               </Text>
               <Text fontFamily={"Lemon, Poppins, sans-serif"}>
-                Credits : {credits}
+                Credits : {credits ? credits : 0}
               </Text>
               <Text fontFamily={"Lemon, Poppins, sans-serif"}>
                 Grade : {grade}
