@@ -5,6 +5,7 @@ import preview from "../../assets/preview.jpg";
 import AnimatedProgressProvider from "./AnimatedProgressProvider";
 import { useScreenshot } from "./Screenshot";
 import Compressor from "compressorjs";
+import incorrect from "../../assets/incorrect.png";
 import {
   Table,
   TableCaption,
@@ -16,7 +17,13 @@ import {
   Tbody,
 } from "@chakra-ui/react";
 
-export const Stats = ({ contactName, attemps, percentage, grade, credits }) => {
+export const Stats = ({
+  contactName,
+  sessions,
+  percentage,
+  grade,
+  credits,
+}) => {
   const ref = createRef(null);
   const [image, setImage] = useState(
     localStorage.getItem("fileBase64")
@@ -154,7 +161,7 @@ export const Stats = ({ contactName, attemps, percentage, grade, credits }) => {
               <AnimatedProgressProvider value={percentage} />
             </Box>
           </Box>
-          {attemps.length > 0 ? (
+          {sessions?.length > 0 ? (
             <Box>
               <Text
                 textAlign={"left"}
@@ -194,7 +201,7 @@ export const Stats = ({ contactName, attemps, percentage, grade, credits }) => {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {attemps.map(
+                    {sessions.map(
                       (
                         {
                           Session_Name,
@@ -202,6 +209,7 @@ export const Stats = ({ contactName, attemps, percentage, grade, credits }) => {
                           Quiz_Score,
                           Subject,
                           Total_Questions,
+                          attempted,
                         },
                         i
                       ) => (
@@ -212,17 +220,23 @@ export const Stats = ({ contactName, attemps, percentage, grade, credits }) => {
                               : Session_Name}
                           </Td>
                           <Td isNumeric>
-                            <Tag
-                              size={"sm"}
-                              colorScheme={Quiz_Score >= 6 ? "green" : "red"}
-                            >
-                              {Quiz_Score}/{Total_Questions}
-                            </Tag>
+                            {attempted ? (
+                              <Tag
+                                size={"sm"}
+                                colorScheme={Quiz_Score >= 6 ? "green" : "red"}
+                              >
+                                {Quiz_Score}/{Total_Questions}
+                              </Tag>
+                            ) : (
+                              <Box display={"flex"} justifyContent={"center"}>
+                                <img src={incorrect} alt="NA" width={"30px"} />
+                              </Box>
+                            )}
                           </Td>
                           <Td>
                             {" "}
                             <Tag
-                              width={"55px"}
+                              width={"58px"}
                               size={"sm"}
                               colorScheme={Quiz_Score >= 6 ? "green" : "red"}
                             >

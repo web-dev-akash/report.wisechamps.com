@@ -52,8 +52,6 @@ export const App = () => {
     }
   };
 
-  console.log(userData);
-
   useEffect(() => {
     if (email) {
       handleClick(email);
@@ -108,7 +106,7 @@ export const App = () => {
   if (mode === "user") {
     return (
       <Stats
-        attemps={userData.attempts}
+        sessions={userData.sessions}
         contactName={userData.name}
         grade={userData.grade}
         percentage={userData.percentage}
