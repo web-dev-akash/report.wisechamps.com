@@ -136,7 +136,7 @@ export const App = () => {
 
   if (error) {
     return (
-      <div>
+      <div style={{ minHeight: "90vh" }}>
         <h1>Something Went Wrong. Please Refresh</h1>
       </div>
     );
@@ -146,6 +146,7 @@ export const App = () => {
     return (
       <div
         style={{
+          minHeight: "90vh",
           overflow: "hidden",
           display: "flex",
           justifyContent: "center",
