@@ -136,7 +136,12 @@ export const App = () => {
 
   if (error) {
     return (
-      <div style={{ minHeight: "90vh" }}>
+      <div
+        style={{
+          minHeight: "90vh",
+          textAlign: "center",
+        }}
+      >
         <h1>Something Went Wrong. Please Refresh</h1>
       </div>
     );
@@ -152,6 +157,7 @@ export const App = () => {
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",
+          textAlign: "center",
         }}
       >
         <p
