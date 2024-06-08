@@ -20,7 +20,7 @@ export const App = () => {
   const [mode, setMode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState({});
 
   const emailRegex = new RegExp(
     /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/,
@@ -36,6 +36,82 @@ export const App = () => {
     try {
       if (!emailRegex.test(emailParam)) {
         alert("Please enter a Valid Email");
+        return;
+      }
+      if (emailParam === "teststudent@wisechamps.com") {
+        setUserData({
+          mode: "user",
+          name: "Student",
+          grade: "5",
+          credits: 5,
+          percentage: 95,
+          sessions: [
+            {
+              Session_Date_Time: "2024-05-27T11:00:00+05:30",
+              Session_Name: "Nouns  Pronouns",
+              Subject: "English",
+              Total_Questions: 12,
+              attempted: true,
+              Quiz_Score: 10,
+              id: "4878003000021707061",
+            },
+            {
+              Session_Date_Time: "2024-05-28T11:00:00+05:30",
+              Session_Name: "Food and Its Components",
+              Subject: "Science",
+              Total_Questions: 10,
+              attempted: true,
+              Quiz_Score: 10,
+              id: "4878003000021707066",
+            },
+            {
+              Session_Date_Time: "2024-05-29T11:00:00+05:30",
+              Session_Name: "Understanding Elementary Shapes",
+              Subject: "Math",
+              Total_Questions: 10,
+              attempted: true,
+              Quiz_Score: 10,
+              id: "4878003000021707071",
+            },
+            {
+              Session_Date_Time: "2024-05-30T11:30:00+05:30",
+              Session_Name: "Vocabulary",
+              Subject: "English",
+              Total_Questions: 12,
+              attempted: true,
+              Quiz_Score: 10,
+              id: "4878003000021808093",
+            },
+            {
+              Session_Date_Time: "2024-05-31T11:00:00+05:30",
+              Session_Name: "Mirror and Water Images, Direction sense",
+              Subject: "Math",
+              Total_Questions: 10,
+              attempted: true,
+              Quiz_Score: 10,
+              id: "4878003000021808098",
+            },
+            {
+              Session_Date_Time: "2024-06-01T11:00:00+05:30",
+              Session_Name: "Fibre to Fabric  June",
+              Subject: "Science",
+              Total_Questions: 10,
+              attempted: true,
+              Quiz_Score: 10,
+              id: "4878003000021808103",
+            },
+            {
+              Session_Date_Time: "2024-06-02T11:00:00+05:30",
+              Session_Name: "Knowing our Numbers  June",
+              Subject: "Math",
+              Total_Questions: 10,
+              attempted: true,
+              Quiz_Score: 10,
+              id: "4878003000021808108",
+            },
+          ],
+        });
+        setMode("user");
         return;
       }
       setLoading(true);
@@ -103,11 +179,13 @@ export const App = () => {
     return <NoAttemptsFound />;
   }
 
+  console.log(userData.sessions);
+
   if (mode === "user") {
     return (
       <Stats
         sessions={userData.sessions}
-        contactName={userData.name}
+        contactName={userData.name.trim()}
         grade={userData.grade}
         percentage={userData.percentage}
         credits={userData.credits}

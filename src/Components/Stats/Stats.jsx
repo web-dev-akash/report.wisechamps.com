@@ -1,11 +1,11 @@
-import { Box, ChakraProvider, Tag, Text } from "@chakra-ui/react";
+import { Box, Image, Tag, Text } from "@chakra-ui/react";
 import "react-circular-progressbar/dist/styles.css";
-import React, { createRef, useState } from "react";
-import preview from "../../assets/preview.jpg";
+import React, { useState } from "react";
 import AnimatedProgressProvider from "./AnimatedProgressProvider";
-import { useScreenshot } from "./Screenshot";
 import Compressor from "compressorjs";
 import incorrect from "../../assets/incorrect.png";
+import logo from "../../assets/Logo.png";
+import wave from "../../assets/wave.gif";
 import {
   Table,
   TableCaption,
@@ -16,6 +16,7 @@ import {
   Td,
   Tbody,
 } from "@chakra-ui/react";
+import Avatar, { genConfig } from "react-nice-avatar";
 
 export const Stats = ({
   contactName,
@@ -24,13 +25,12 @@ export const Stats = ({
   grade,
   credits,
 }) => {
-  const ref = createRef(null);
+  const config = genConfig(contactName);
   const [image, setImage] = useState(
     localStorage.getItem("fileBase64")
       ? JSON.parse(localStorage.getItem("fileBase64"))
       : null
   );
-  const [screenshot, setScreenshot] = useScreenshot();
 
   const getBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -54,56 +54,68 @@ export const Stats = ({
     });
   };
 
-  const shareImage = async () => {
-    setScreenshot(ref.current);
-  };
-
   return (
-    <ChakraProvider resetCSS={true} disableGlobalStyle={true}>
+    <Box
+      height={"100vh"}
+      display={["unset", "unset", "flex", "flex"]}
+      justifyContent={"center"}
+      alignItems={"center"}
+    >
       <Box
-        width={["340px", "340px", "500px", "50%"]}
+        width={"100%"}
+        maxWidth={["100%", "100%", "600px", "600px"]}
         overflow={"hidden"}
-        pb={5}
-        pt={[1, 1, 1, 2]}
-        boxShadow={[
-          "rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px",
-          "rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px",
-          "rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px",
-          "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-        ]}
-        borderRadius={"20px"}
+        borderRadius={"10px"}
+        border={["none", "none", "1px solid #4e46e4", "1px solid #4e46e4"]}
+        padding={"1rem 10px"}
+        textAlign={"center"}
       >
-        <Box ref={ref}>
-          <Box
-            width={"100%"}
-            display={"flex"}
-            alignItems={"center"}
-            justifyContent={[
-              "flex-start",
-              "flex-start",
-              "space-between",
-              "space-between",
-            ]}
-            p={["10px", "10px", "10px 50px", "10px 50px"]}
-            gap={[8, 8, 0, 0]}
-          >
-            <Box
-              display={"flex"}
-              position={"relative"}
-              width={"120px"}
-              height={"120px"}
-              overflow={"hidden"}
+        <Box
+          display={"flex"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+          mt={"-5px"}
+        >
+          <Box>
+            <Image src={logo} alt="Wisechamps" width={"100px"} />
+          </Box>
+          <Box>
+            <Tag
+              colorScheme="purple"
+              fontSize={["11px", "11px", "13px", "14px"]}
             >
-              <img
-                src={image ? image : preview}
-                alt="Upload"
-                width={"100%"}
-                height={"100%"}
-                style={{
-                  borderRadius: "30px",
-                  objectFit: "cover",
-                }}
-              />
+              Quiz Balance : {credits ? credits : 0}
+            </Tag>
+            <Tag
+              colorScheme="purple"
+              ml={1}
+              fontSize={["11px", "11px", "13px", "14px"]}
+            >
+              Grade : {grade}
+            </Tag>
+          </Box>
+        </Box>
+        <Box>
+          <Box width={"100%"} display={"flex"} gap={"20px"} m={"15px 0 20px 0"}>
+            <Box display={"flex"} position={"relative"} overflow={"hidden"}>
+              {image ? (
+                <Image
+                  src={image}
+                  alt="Upload"
+                  width={"70px"}
+                  height={"70px"}
+                  borderRadius={"50%"}
+                  objectFit={"cover"}
+                />
+              ) : (
+                <Box>
+                  <Avatar
+                    {...config}
+                    style={{ width: "68px", height: "68px" }}
+                  />
+                  <Text fontSize={"10px"}>Add Photo</Text>
+                </Box>
+              )}
               <input
                 type="file"
                 onChange={handleChange}
@@ -115,47 +127,80 @@ export const Stats = ({
                   height: "120px",
                   cursor: "pointer",
                   opacity: "0",
+                  borderRadius: "10px",
                 }}
               />
             </Box>
-            <Box color={"#646cff"}>
-              <Text
-                textTransform={"uppercase"}
-                fontFamily={"Lemon, Poppins, sans-serif"}
-                fontSize={30}
-              >
-                {contactName.split(" ")[0].length > 2
-                  ? contactName.split(" ")[0]
-                  : contactName}
-              </Text>
-              <Text fontFamily={"Lemon, Poppins, sans-serif"}>
-                Credits : {credits ? credits : 0}
-              </Text>
-              <Text fontFamily={"Lemon, Poppins, sans-serif"}>
-                Grade : {grade}
-              </Text>
+            <Box flexBasis={"73%"} textAlign={"left"}>
+              <Box display={"flex"} alignItems={"center"} gap={2}>
+                <Text fontSize={30} fontWeight={500}>
+                  Hi,{" "}
+                  <Text
+                    as={"span"}
+                    fontSize={30}
+                    fontWeight={700}
+                    textTransform={"uppercase"}
+                  >
+                    {contactName.split(" ")[0].length > 2
+                      ? contactName.split(" ")[0]
+                      : contactName}
+                  </Text>
+                </Text>
+                <Image
+                  position={"relative"}
+                  top={"-6px"}
+                  transform={"rotateY(180deg)"}
+                  src={wave}
+                  alt="👋"
+                  width={"40px"}
+                />
+              </Box>
+              <Box>
+                <Text fontSize={["13px", "13px", "14px", "15px"]}>
+                  Weekly Report{" "}
+                  <Tag
+                    colorScheme="purple"
+                    size={["sm", "sm", "sm", "md"]}
+                    fontSize={["11px", "11px", "13px", "15px"]}
+                  >
+                    {new Date(sessions[0].Session_Date_Time).toLocaleDateString(
+                      "en-US",
+                      {
+                        day: "numeric",
+                        month: "long",
+                      }
+                    )}{" "}
+                    -{" "}
+                    {new Date(sessions[3].Session_Date_Time).toLocaleDateString(
+                      "en-US",
+                      {
+                        day: "numeric",
+                        month: "long",
+                      }
+                    )}
+                  </Tag>
+                </Text>
+              </Box>
             </Box>
           </Box>
           <hr
             style={{
-              margin: "10px 0",
               color: "#ccc",
             }}
           ></hr>
           <Box>
             <Text
               textAlign={"left"}
-              color={"#646cff"}
-              fontSize={23}
-              m={"10px 0 10px 20px"}
-              fontFamily={"Lemon, Poppins, sans-serif"}
+              fontSize={["15px", "15px", "18px", "20px"]}
+              m={"10px 0 0 0"}
+              fontWeight={600}
             >
-              IQ Meter :
+              IQ Meter
             </Text>
             <Box
               style={{
                 width: "50%",
-                margin: "0px auto",
+                margin: "0 auto",
               }}
             >
               <AnimatedProgressProvider value={percentage} />
@@ -165,39 +210,48 @@ export const Stats = ({
             <Box>
               <Text
                 textAlign={"left"}
-                color={"#646cff"}
-                fontSize={23}
-                m={"15px 0 10px 20px"}
-                fontFamily={"Lemon, Poppins, sans-serif"}
+                fontSize={["15px", "15px", "18px", "20px"]}
+                m={"15px 0 5px 0"}
+                fontWeight={600}
               >
-                Performance :
+                Performance
               </Text>
               <TableContainer
                 borderRadius={"10px"}
                 whiteSpace={"unset"}
-                maxWidth={"95%"}
+                maxWidth={"100%"}
                 margin={"0 auto"}
                 id={"tableContainer"}
               >
                 <Table size={"sm"} border={"1px solid #646cff"}>
                   <TableCaption>
                     Weekly Report updates every{" "}
-                    <Tag size={"sm"} colorScheme={"linkedin"}>
+                    <Tag size={"sm"} colorScheme={"purple"}>
                       Sunday
                     </Tag>{" "}
                     evening.
                   </TableCaption>
                   <Thead>
                     <Tr height={"50px"}>
-                      <Th>Topic</Th>
+                      <Th>
+                        <Text fontSize={["11px", "11px", "13px", "14px"]}>
+                          Topic
+                        </Text>
+                      </Th>
                       <Th
                         isNumeric
                         borderRight={"1px solid #fff"}
                         borderLeft={"1px solid #fff"}
                       >
-                        Score
+                        <Text fontSize={["11px", "11px", "13px", "14px"]}>
+                          Score
+                        </Text>
                       </Th>
-                      <Th>Date</Th>
+                      <Th>
+                        <Text fontSize={["11px", "11px", "13px", "14px"]}>
+                          Date
+                        </Text>
+                      </Th>
                     </Tr>
                   </Thead>
                   <Tbody>
@@ -259,6 +313,6 @@ export const Stats = ({
           ) : null}
         </Box>
       </Box>
-    </ChakraProvider>
+    </Box>
   );
 };
