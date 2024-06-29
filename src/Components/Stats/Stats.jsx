@@ -56,7 +56,7 @@ export const Stats = ({
 
   return (
     <Box
-      height={"100vh"}
+      minHeight={"100vh"}
       display={["unset", "unset", "flex", "flex"]}
       justifyContent={"center"}
       alignItems={"center"}
@@ -74,12 +74,12 @@ export const Stats = ({
           display={"flex"}
           justifyContent={"space-between"}
           alignItems={"center"}
-          mt={"-5px"}
+          mt={"-10px"}
         >
           <Box>
-            <Image src={logo} alt="Wisechamps" width={"100px"} />
+            <Image src={logo} alt="Wisechamps" width={"120px"} />
           </Box>
-          <Box>
+          <Box mt={"5px"}>
             <Tag
               colorScheme="purple"
               fontSize={["11px", "11px", "13px", "14px"]}
@@ -171,13 +171,12 @@ export const Stats = ({
                       }
                     )}{" "}
                     -{" "}
-                    {new Date(sessions[3].Session_Date_Time).toLocaleDateString(
-                      "en-US",
-                      {
-                        day: "numeric",
-                        month: "long",
-                      }
-                    )}
+                    {new Date(
+                      sessions[sessions.length - 1].Session_Date_Time
+                    ).toLocaleDateString("en-US", {
+                      day: "numeric",
+                      month: "long",
+                    })}
                   </Tag>
                 </Text>
               </Box>
